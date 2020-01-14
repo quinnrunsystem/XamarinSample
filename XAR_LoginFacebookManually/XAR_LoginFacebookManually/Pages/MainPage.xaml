@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    Padding="0,20,0,0"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="XAR_LoginFacebookManually.Pages.MainPage">
+    <ContentPage.Content>
+       <Grid
+           VerticalOptions="Fill"
+           HorizontalOptions="Fill">
+           <Label
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="Red"
+               Text="DANG NHAP THANH CONG"/>
+       </Grid>
+    </ContentPage.Content>
+</ContentPage>

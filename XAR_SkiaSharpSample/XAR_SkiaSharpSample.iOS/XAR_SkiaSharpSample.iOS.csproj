@@ -130,4 +130,7 @@
       <Name>XAR_SkiaSharpSample</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\expandArrow.png" />
+  </ItemGroup>
 </Project>

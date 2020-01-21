@@ -1,7 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="XAR_SkiaSharpSample.MainPage">
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+<ContentPage
+    Padding="0,20,0,0"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Class="XAR_SkiaSharpSample.MainPage">
+    <Grid
+        x:Name="gridMain"
+        RowSpacing="0"
+        ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            x:Name="lblTitleMenu"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Text="SkiaSharp Menu"
+            FontSize="20"
+            FontAttributes="Bold"
+            TextColor="Black"/>
+
+        <ListView
+            Grid.Row="1"
+            Grid.Column="0"
+            x:Name="lvMenu">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                           <Grid.ColumnDefinitions>
+                               <ColumnDefinition Width="*"/>
+                               <ColumnDefinition Width="15"/>
+                           </Grid.ColumnDefinitions>
+
+                            <Label
+                                Grid.Column="0"
+                                HorizontalOptions="Fill"
+                                x:Name="lblTextTitle"
+                                FontSize="14"
+                                FontAttributes="None"
+                                TextColor="Blue"/>
+                            <Image
+                               Grid.Column="1"
+                               x:Name="imgExpand"
+                               WidthRequest="15"
+                               HeightRequest="15"
+                               Source="expandArrow.png"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </ContentPage>

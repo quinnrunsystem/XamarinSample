@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:CollectionViewSample.Views.Layout"
+    mc:Ignorable="d"
+    x:Class="CollectionViewSample.MainPage">
+    <TableView
+        Intent="Menu">
+        <TableRoot>
+            <TableSection Title="Layout">
+                <TextCell
+                    Text="Vertical list"
+                    Detail="Text"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type view:VerticalListTextPage}"/>
+                <TextCell
+                    Text="Horizontal list"
+                    Detail="Text"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type view:HorizontalListTextPage}"/>
+                <TextCell
+                    Text="Vertical grid list"
+                    Detail="Text"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type view:VerticalGridTextPage}"/>
+                <TextCell
+                    Text="Horizontal grid list"
+                    Detail="Text"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type view:HorizontalGridTextPage}"/>
+                <TextCell
+                    Text="Vertical list"
+                    Detail="DataTemplate"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type view:VerticalGridPage}"/>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+   
+</ContentPage>

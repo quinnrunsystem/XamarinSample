@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CollectionViewSample.Views.Layout.VerticalGridTextPage">
+    <ContentPage.Content>
+        <StackLayout
+        Margin="20">
+        <CollectionView>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    Orientation="Vertical"
+                    Span="3"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Liverpool</x:String>
+                    <x:String>Man City</x:String>
+                    <x:String>Leicester City</x:String>
+                    <x:String>Chelsea</x:String>
+                    <x:String>Man Utd</x:String>
+                    <x:String>Wolves</x:String>
+                    <x:String>Sheffield Utd</x:String>
+                    <x:String>Tottenham</x:String>
+                    <x:String>Southampton</x:String>
+                    <x:String>Arsenal</x:String>
+                    <x:String>Crystal Palace</x:String>
+                    <x:String>Everton</x:String>
+                    <x:String>Newcastle</x:String>
+                    <x:String>Burnley</x:String>
+                    <x:String>Brighton</x:String>
+                    <x:String>Aston Villa</x:String>
+                    <x:String>WestHam Utd</x:String>
+                    <x:String>Bournemouth</x:String>
+                    <x:String>Watford</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+        </CollectionView>
+    </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

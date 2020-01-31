@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:control="clr-namespace:XAR_SegmentButtonWidthSkiaSharp"
+    mc:Ignorable="d" x:Class="XAR_SegmentButtonWidthSkiaSharp.MainPage">
+    <StackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
+
+        <control:SegmentButton
+            x:Name="btn"
+            HeightRequest="50"
+            WidthRequest="200"
+            VerticalOptions="Center"
+            CornerRadius="60"
+            HasBorder="True"
+            BorderColor="Yellow"
+            BorderWidth="30"
+            HorizontalOptions="Center">
+            
+        </control:SegmentButton>
+
+    </StackLayout>
+</ContentPage>

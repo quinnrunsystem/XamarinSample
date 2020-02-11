@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{CED1E18D-DF2C-4289-979A-0E0D502711F9}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="XAR_SegmentButtonWidthSkiaSharp/Control/MySKCanvasView.cs">
+    <Files>
+      <File FileName="XAR_SegmentButtonWidthSkiaSharp/Control/MySKCanvasView.cs" Line="412" Column="32" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="XAR_SegmentButtonWidthSkiaSharp" expanded="True">
+            <Node name="XAR_SegmentButtonWidthSkiaSharp" expanded="True">
+              <Node name="Control" expanded="True">
+                <Node name="MySKCanvasView.cs" selected="True" />
+              </Node>
+            </Node>
+            <Node name="XAR_SegmentButtonWidthSkiaSharp.Android" expanded="True">
+              <Node name="Renderers" expanded="True" />
+            </Node>
+            <Node name="XAR_SegmentButtonWidthSkiaSharp.iOS" expanded="True">
+              <Node name="Renderers" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.XAR__SegmentButtonWidthSkiaSharp.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.242DE212-F95B-4243-961A-D5D846342676" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.XAR__SegmentButtonWidthSkiaSharp.Android PreferredExecutionTarget="Android.BH9017PN54" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint hitAction="PrintExpression" traceExpression="{t}" file="/Users/xamarinserver/Desktop/XAR_SegmentButtonWidthSkiaSharp/XAR_SegmentButtonWidthSkiaSharp.Android/Renderers/MySKCanvasViewRenderer.cs" relfile="XAR_SegmentButtonWidthSkiaSharp.Android/Renderers/MySKCanvasViewRenderer.cs" line="70" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

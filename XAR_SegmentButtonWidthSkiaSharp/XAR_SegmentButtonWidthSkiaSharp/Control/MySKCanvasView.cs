@@ -12,15 +12,15 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
 {
     public class MySKCanvasView : SKCanvasView
     {
-        public SKImageInfo Info { get; private set; }
-        public (SKPoint min, SKPoint max)[] CoordinateButtons { get; private set; }
+        private SKImageInfo _info;
+        private (SKPoint min, SKPoint max)[] _coordinateCells;
         private IDimension _dimension;
-        private State _state = State.HoverOut;
+        private StateCell _state = StateCell.HoverOut;
         private SKPaint paint;
 
         #region CornerRadius
         public static readonly BindableProperty CornerRadiusProperty =
-            BindableProperty.Create("CornerRadius", typeof(float), typeof(MySKCanvasView));
+            BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(MySKCanvasView));
 
         public float CornerRadius
         {
@@ -28,10 +28,9 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (float)GetValue(CornerRadiusProperty);
         }
         #endregion
-
         #region BorderWidth
         public static readonly BindableProperty BorderWidthProperty =
-            BindableProperty.Create("BorderWidth", typeof(float), typeof(MySKCanvasView));
+            BindableProperty.Create(nameof(BorderWidth), typeof(float), typeof(MySKCanvasView));
 
         public float BorderWidth
         {
@@ -39,32 +38,29 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (float)GetValue(BorderWidthProperty);
         }
         #endregion
+        #region SelectedCellColor
+        public static readonly BindableProperty SelectedCellColorProperty =
+            BindableProperty.Create(nameof(SelectedCellColor), typeof(Color), typeof(MySKCanvasView), Color.White);
 
-        #region SelectedTabColor
-        public static readonly BindableProperty SelectedTabColorProperty =
-            BindableProperty.Create("SelectedTabColor", typeof(Color), typeof(MySKCanvasView), Color.White);
-
-        public Color SelectedTabColor
+        public Color SelectedCellColor
         {
-            set => SetValue(SelectedTabColorProperty, value);
-            get => (Color)GetValue(SelectedTabColorProperty);
+            set => SetValue(SelectedCellColorProperty, value);
+            get => (Color)GetValue(SelectedCellColorProperty);
         }
         #endregion
+        #region HoverCellColor
+        public static readonly BindableProperty HoverCellColorProperty =
+            BindableProperty.Create(nameof(HoverCellColor), typeof(Color), typeof(MySKCanvasView), Color.Gray);
 
-        #region HoverColor
-        public static readonly BindableProperty HoverColorProperty =
-            BindableProperty.Create("HoverColor", typeof(Color), typeof(MySKCanvasView), Color.Gray);
-
-        public Color HoverColor
+        public Color HoverCellColor
         {
-            set => SetValue(HoverColorProperty, value);
-            get => (Color)GetValue(HoverColorProperty);
+            set => SetValue(HoverCellColorProperty, value);
+            get => (Color)GetValue(HoverCellColorProperty);
         }
         #endregion
-
         #region TextColor
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create("TextColor", typeof(Color), typeof(MySKCanvasView), Color.White);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MySKCanvasView), Color.White);
 
         public Color TextColor
         {
@@ -72,10 +68,9 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (Color)GetValue(TextColorProperty);
         }
         #endregion
-
         #region SelectedTextColor
         public static readonly BindableProperty SelectedTextColorProperty =
-            BindableProperty.Create("SelectedTextColor", typeof(Color), typeof(MySKCanvasView), Color.Black);
+            BindableProperty.Create(nameof(SelectedTextColor), typeof(Color), typeof(MySKCanvasView), Color.Black);
 
         public Color SelectedTextColor
         {
@@ -83,10 +78,9 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (Color)GetValue(SelectedTextColorProperty);
         }
         #endregion
-
         #region BorderColor
         public static readonly BindableProperty BorderColorProperty =
-            BindableProperty.Create("BorderColor", typeof(Color), typeof(MySKCanvasView), defaultValue: Color.Black);
+            BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MySKCanvasView), defaultValue: Color.Black);
 
         public Color BorderColor
         {
@@ -94,10 +88,9 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (Color)GetValue(BorderColorProperty);
         }
         #endregion
-
         #region Texts
         public static readonly BindableProperty TextsProperty =
-            BindableProperty.Create("Texts", typeof(List<string>), typeof(MySKCanvasView));
+            BindableProperty.Create(nameof(Texts), typeof(List<string>), typeof(MySKCanvasView));
 
         public List<string> Texts
         {
@@ -105,10 +98,9 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (List<string>)GetValue(TextsProperty);
         }
         #endregion
-
         #region FontSize
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create("FontSize", typeof(float), typeof(MySKCanvasView), defaultValue: 20f);
+            BindableProperty.Create(nameof(FontSize), typeof(float), typeof(MySKCanvasView), defaultValue: 20f);
 
         public float FontSize
         {
@@ -116,10 +108,9 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (float)GetValue(FontSizeProperty);
         }
         #endregion
-
         #region BackgroundContentColor
         public static readonly BindableProperty BackgroundContentColorProperty =
-            BindableProperty.Create("BackgroundContentColor", typeof(Color), typeof(MySKCanvasView), Color.Blue);
+            BindableProperty.Create(nameof(BackgroundContentColor), typeof(Color), typeof(MySKCanvasView), Color.Blue);
 
         public Color BackgroundContentColor
         {
@@ -127,21 +118,19 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             get => (Color)GetValue(BackgroundContentColorProperty);
         }
         #endregion
+        #region PositionCurrent
+        public static readonly BindableProperty PositionCurrentProperty =
+            BindableProperty.Create(nameof(PositionCurrent), typeof(int), typeof(MySKCanvasView));
 
-        #region ButtonCurrent
-        public static readonly BindableProperty ButtonCurrentProperty =
-            BindableProperty.Create("FontSize", typeof(int), typeof(MySKCanvasView), defaultValue: 0);
-
-        public int ButtonCurrent
+        public int PositionCurrent
         {
-            set => SetValue(ButtonCurrentProperty, value);
-            get => (int)GetValue(ButtonCurrentProperty);
+            set => SetValue(PositionCurrentProperty, value);
+            get => (int)GetValue(PositionCurrentProperty);
         }
         #endregion
-
         #region TapButtonCommand
         public static readonly BindableProperty TapButtonCommandProperty =
-            BindableProperty.Create("TapButtonCommand", typeof(ICommand), typeof(MySKCanvasView));
+            BindableProperty.Create(nameof(TapButtonCommand), typeof(ICommand), typeof(MySKCanvasView));
 
         public ICommand TapButtonCommand
         {
@@ -153,16 +142,15 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
         public MySKCanvasView()
         {
             EnableTouchEvents = true;
-            PaintSurface += OnPaintSuface;
             _dimension = DependencyService.Get<IDimension>();
         }
 
         public void InvokeOnTouch(TouchActionEventArgs args)
         {
             Debug.WriteLine(args.Type.ToString());
-            UpdateControl(args.Location, Info, args.Type);
-        }
+            UpdateControl(args.Location, _info, args.Type);
 
+        }
         private void ExecuteTapCommnad(ICommand command, int indexButton)
         {
             if (command == null) return;
@@ -171,66 +159,24 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
                 command.Execute(indexButton);
             }
         }
-
         private void SaveCoordinateButtons(SKImageInfo info)
         {
             float buttonWidth = info.Width / Texts.Count;
-            CoordinateButtons = new (SKPoint, SKPoint)[Texts.Count];
+            _coordinateCells = new (SKPoint, SKPoint)[Texts.Count];
             for (int i = 0; i < Texts.Count; i++)
             {
-                CoordinateButtons[i].min.X = buttonWidth * i;
-                CoordinateButtons[i].max.X = CoordinateButtons[i].min.X + buttonWidth;
+                _coordinateCells[i].min.X = buttonWidth * i;
+                _coordinateCells[i].max.X = _coordinateCells[i].min.X + buttonWidth;
 
-                CoordinateButtons[i].min.Y = 0;
-                CoordinateButtons[i].max.Y = info.Height;
+                _coordinateCells[i].min.Y = 0;
+                _coordinateCells[i].max.Y = info.Height;
             }
         }
-
-        # region OnPaintSuface
-        private void OnPaintSuface(object sender, SKPaintSurfaceEventArgs e)
-        {
-            var countButton = Texts.Count;
-            if (countButton == 0)
-                return;
-
-            //get info skcanvas
-            var info = Info = e.Info;
-            var surface = e.Surface;
-            var canvas = surface.Canvas;
-
-            canvas.Clear();
-
-            SaveCoordinateButtons(info); //Update CoordinateTabs
-
-            var borderWidth =  _dimension.ConvertDpToPx(BorderWidth);
-            var cornerRadius = _dimension.ConvertDpToPx(CornerRadius);
-            var fontSize = _dimension.ConvertDpToPx(FontSize);
-
-            if (paint == null)
-                paint = new SKPaint();
-
-            paint.Reset();
-            paint.IsAntialias = true;
-
-            //create SKRect full size of canvasview 
-            DrawRectBorder(info, canvas, paint, cornerRadius, borderWidth);
-            //draw rect content
-            DrawRectContent(info, canvas, paint, cornerRadius, borderWidth);
-            //draw edges
-            DrawEdges(info, canvas, paint, countButton, borderWidth);
-            //draw text
-            DrawTexts(info, canvas, paint, countButton, fontSize,_state);
-            //draw rect hightlight
-            DrawRectHightlight(canvas, paint, cornerRadius);
-
-            DrawTextHightLight(info, canvas, paint);
-        }
-        #endregion
 
         #region Draw
         void DrawRectBorder(SKImageInfo info, SKCanvas canvas, SKPaint paint, float radius, float bortherWidth)
         {
-            if (bortherWidth > 0)
+            if (bortherWidth > 0)  // view not has border
             {
                 GetPaintDrawRectBoder(ref paint);
 
@@ -240,51 +186,51 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             }
 
         }
-        void DrawRectContent(SKImageInfo info, SKCanvas canvas, SKPaint paint, float radius, float borderWidth)
+        private void DrawRectContent(SKImageInfo info, SKCanvas canvas, SKPaint paint, float radius, float borderWidth,StateCell state)
         {
-            
-            GetPaintDrawRect(ref paint, State.HoverOut);
 
-            //caculate radius of rect content
+            GetPaintDrawRect(ref paint,state,isHightLight:false);
+
+            //caculate ratio radius of rect content compare to rect border
             radius = (info.Width - borderWidth) / borderWidth * radius;
 
             //draw rect content
             var roundRectContent = new SKRoundRect(new SKRect(borderWidth, borderWidth, info.Width - borderWidth, info.Height - borderWidth), radius, radius);
             canvas.DrawRoundRect(roundRectContent, paint);
         }
-        void DrawTexts(SKImageInfo info, SKCanvas canvas, SKPaint paint, int countButton, float fontSize, State state)
+        private void DrawTexts(SKImageInfo info, SKCanvas canvas, SKPaint paint, int countButton, float fontSize, StateCell state)
         {
             GetPaintDrawText(ref paint, fontSize, state, isHightLight: false);
+
             for (int i = 0; i < countButton; i++)
             {
-                if (ButtonCurrent == i)
+                if (PositionCurrent == i) //not draw this text , it is hightlight
                     continue;
-                var widthBound = CoordinateButtons[i].max.X - CoordinateButtons[i].min.X;
+
+                var widthBound = _coordinateCells[i].max.X - _coordinateCells[i].min.X;
 
                 //find the text bounds
                 var textBounds = new SKRect();
                 paint.MeasureText(Texts[i], ref textBounds);
 
-                //calculate center
-                float xText = CoordinateButtons[i].min.X + (widthBound / 2 - textBounds.MidX);
+                //calculate position center
+                float xText = _coordinateCells[i].min.X + (widthBound / 2 - textBounds.MidX);
                 float yText = info.Height / 2 - textBounds.MidY;
 
                 canvas.DrawText(Texts[i], xText, yText, paint);
             }
         }
-        void DrawEdges(SKImageInfo info, SKCanvas canvas, SKPaint paint, int countButton, float borderWith)
+        private void DrawEdges(SKImageInfo info, SKCanvas canvas, SKPaint paint, int countButton, float borderWith)
         {
             GetPaintDrawEdge(ref paint, borderWith);
-            //get coordinate
+            //get distance between lines
             var spaceLine = info.Width / countButton;
             using (var path = new SKPath())
             {
                 for (int i = 0; i < countButton - 1; i++)
                 {
-                    //frist
-                    if (ButtonCurrent == i || (i + 1 == ButtonCurrent))
-                        continue;
- 
+                    if (PositionCurrent == i || PositionCurrent ==i + 1)  //cell is highlight, not draw edge
+                            continue;
                     var positionDrawX = spaceLine * (i + 1);
                     path.MoveTo(positionDrawX, 0);
                     path.LineTo(new SKPoint(positionDrawX, info.Height));
@@ -293,92 +239,82 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
                 canvas.DrawPath(path, paint);
             }
         }
-        void DrawRectHightlight(SKCanvas canvas, SKPaint paint, float radius)
+        private void DrawRectHightlight(SKCanvas canvas, SKPaint paint, float radius,StateCell state)
         {
-            if (_state == State.HoverIn)
-                paint.Color = HoverColor.ToSKColor();
-            else if (_state == State.Released || _state == State.HoverOut)
-                paint.Color = SelectedTabColor.ToSKColor();
-
+            GetPaintDrawRect(ref paint, state, isHightLight: true);
             SKRect rect;
             SKRoundRect roundRect;
 
-            if (ButtonCurrent == 0)
+            if (PositionCurrent == 0)
             {
-                rect = new SKRect(CoordinateButtons[0].max.X / 2, 0, CoordinateButtons[0].max.X, CoordinateButtons[0].max.Y);
-                roundRect = new SKRoundRect(new SKRect(CoordinateButtons[ButtonCurrent].min.X, CoordinateButtons[ButtonCurrent].min.Y, CoordinateButtons[ButtonCurrent].max.X, CoordinateButtons[ButtonCurrent].max.Y), radius, radius);
+                rect = new SKRect(_coordinateCells[0].max.X / 2, 0, _coordinateCells[0].max.X, _coordinateCells[0].max.Y);
+                roundRect = new SKRoundRect(new SKRect(_coordinateCells[PositionCurrent].min.X, _coordinateCells[PositionCurrent].min.Y, _coordinateCells[PositionCurrent].max.X, _coordinateCells[PositionCurrent].max.Y), radius, radius);
                 canvas.DrawRoundRect(roundRect, paint);
             }
-            else if (ButtonCurrent == Texts.Count - 1)
+            else if (PositionCurrent == Texts.Count - 1)
             {
-                rect = new SKRect(CoordinateButtons[ButtonCurrent].min.X, 0, (CoordinateButtons[ButtonCurrent].max.X - CoordinateButtons[ButtonCurrent].min.X) / 2 + CoordinateButtons[ButtonCurrent].min.X, CoordinateButtons[ButtonCurrent].max.Y);
-                roundRect = new SKRoundRect(new SKRect(CoordinateButtons[ButtonCurrent].min.X, CoordinateButtons[ButtonCurrent].min.Y, CoordinateButtons[ButtonCurrent].max.X, CoordinateButtons[ButtonCurrent].max.Y), radius, radius);
+                rect = new SKRect(_coordinateCells[PositionCurrent].min.X, 0, (_coordinateCells[PositionCurrent].max.X - _coordinateCells[PositionCurrent].min.X) / 2 + _coordinateCells[PositionCurrent].min.X, _coordinateCells[PositionCurrent].max.Y);
+                roundRect = new SKRoundRect(new SKRect(_coordinateCells[PositionCurrent].min.X, _coordinateCells[PositionCurrent].min.Y, _coordinateCells[PositionCurrent].max.X, _coordinateCells[PositionCurrent].max.Y), radius, radius);
                 canvas.DrawRoundRect(roundRect, paint);
             }
             else
-                rect = new SKRect(CoordinateButtons[ButtonCurrent].min.X, 0, CoordinateButtons[ButtonCurrent].max.X, CoordinateButtons[ButtonCurrent].max.Y);
+                rect = new SKRect(_coordinateCells[PositionCurrent].min.X, 0, _coordinateCells[PositionCurrent].max.X, _coordinateCells[PositionCurrent].max.Y);
 
             canvas.DrawRect(rect, paint);
         }
-        void DrawTextHightLight(SKImageInfo info, SKCanvas canvas, SKPaint paint)
+        private void DrawTextHightLight(SKImageInfo info, SKCanvas canvas, SKPaint paint, float fontSize, StateCell state)
         {
-            
-            if (_state == State.Released || _state == State.HoverOut)
-                paint.Color = SelectedTextColor.ToSKColor();
-            else if (_state == State.HoverIn)
-                paint.Color = TextColor.ToSKColor();
-            else return;
+            GetPaintDrawText(ref paint, fontSize, state, isHightLight: true);
 
-            paint.Style = SKPaintStyle.Fill;
-            var widthBound = CoordinateButtons[ButtonCurrent].max.X - CoordinateButtons[ButtonCurrent].min.X;
+            var widthBound = _coordinateCells[PositionCurrent].max.X - _coordinateCells[PositionCurrent].min.X;
 
             //find the text bounds
             var textBounds = new SKRect();
-            paint.MeasureText(Texts[ButtonCurrent], ref textBounds);
+            paint.MeasureText(Texts[PositionCurrent], ref textBounds);
 
             //calculate center
-            float xText = CoordinateButtons[ButtonCurrent].min.X + (widthBound / 2 - textBounds.MidX);
+            float xText = _coordinateCells[PositionCurrent].min.X + (widthBound / 2 - textBounds.MidX);
             float yText = info.Height / 2 - textBounds.MidY;
 
-            canvas.DrawText(Texts[ButtonCurrent], xText, yText, paint);
+            canvas.DrawText(Texts[PositionCurrent], xText, yText, paint);
         }
         #endregion
-
-        #region Get Paint
-        void GetPaintDrawText(ref SKPaint paint, float fontSize, State state, bool isHightLight)
+        #region GetPaint
+        private void GetPaintDrawText(ref SKPaint paint, float fontSize, StateCell state, bool isHightLight)
         {
-            if(!isHightLight)
+            if (!isHightLight)
                 paint.Color = TextColor.ToSKColor();
-            else if (state == State.HoverIn)
-                paint.Color = HoverColor.ToSKColor();
-            else if (state == State.Released || state == State.HoverOut)
-                paint.Color = SelectedTabColor.ToSKColor();
+            else if (state == StateCell.HoverIn)
+                paint.Color = TextColor.ToSKColor();
+            else if (state == StateCell.Released || state == StateCell.HoverOut)
+                paint.Color = SelectedTextColor.ToSKColor();
             paint.Style = SKPaintStyle.Fill;
             paint.TextSize = fontSize;
-            paint.Color = TextColor.ToSKColor();
         }
-        void GetPaintDrawRect(ref SKPaint paint, State state)
+        private void GetPaintDrawRect(ref SKPaint paint, StateCell state, bool isHightLight)
         {
-            if (state == State.HoverOut)
-                paint.Color = BackgroundContentColor.ToSKColor();
-            //if (state == State.HoverIn)
-            //    paint.Color = HoverColor.ToSKColor();
-            //if (state == State.Released)
-            //    paint.Color = SelectedTabColor.ToSKColor();
-            paint.Style = SKPaintStyle.Fill;
+            if (!isHightLight)
+               paint.Color = BackgroundContentColor.ToSKColor();
+            else if (state == StateCell.HoverIn)
+                paint.Color = HoverCellColor.ToSKColor();
+            else if (state == StateCell.Released || _state == StateCell.HoverOut)
+                paint.Color = SelectedCellColor.ToSKColor();
         }
-        void GetPaintDrawRectBoder(ref SKPaint paint)
+        private void GetPaintDrawRectBoder(ref SKPaint paint)
         {
             paint.Style = SKPaintStyle.Fill;
             paint.Color = BorderColor.ToSKColor();
         }
-        void GetPaintDrawEdge(ref SKPaint paint, float borderWidth)
+        private void GetPaintDrawEdge(ref SKPaint paint, float borderWidth)
         {
             //draw line down
             paint.Style = SKPaintStyle.Stroke;
             paint.Color = BorderColor.ToSKColor();
             paint.StrokeWidth = borderWidth;
         }
+        #endregion
+
+        int oldPostion= 0;
         public void UpdateControl(Point point, SKImageInfo info, TouchActionType touchActionType)
         {
 
@@ -395,32 +331,37 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
 
                         if (point.X >= min.X && point.X <= max.X)
                         {
-                            if (CheckCoordinatesOutSide(point, Info, i, Texts.Count))
+                            if (CheckCoordinatesOutSide(point, info, i, Texts.Count))
                                 return;
-                            _state = State.HoverIn;
-                            ButtonCurrent = i;
+                            _state = StateCell.HoverIn;
+                            oldPostion = PositionCurrent;
+                            PositionCurrent = i;
                             this.InvalidateSurface();
 
                         }
                     }
                     break;
                 case TouchActionType.Moved:
-
+                    {
+                        var coordinates = _coordinateCells[PositionCurrent];
+                        if (point.X < coordinates.min.X || point.X > coordinates.max.X || point.Y < coordinates.min.Y || point.Y > coordinates.max.Y)
+                        {
+                            UpdateControl(point, info, TouchActionType.Cancelled);
+                        }
+                    }
                     break;
                 case TouchActionType.Released:
-                    if (_state != State.HoverIn)
+                    if (_state != StateCell.HoverIn)
                         return;
-                    if (ButtonCurrent >= 0)
-                    {
-                        _state = State.Released;
+                        _state = StateCell.Released;
                         this.InvalidateSurface();
-                        ExecuteTapCommnad(TapButtonCommand, ButtonCurrent);
+                        ExecuteTapCommnad(TapButtonCommand, PositionCurrent);
                         //reset 
-                    }
                     break;
                 case TouchActionType.Cancelled:
                 case TouchActionType.Exited:
-                    _state = State.HoverOut;
+                    _state = StateCell.HoverOut;
+                    PositionCurrent = oldPostion;
                     this.InvalidateSurface();
                     break;
                 default:
@@ -450,13 +391,44 @@ namespace XAR_SegmentButtonWidthSkiaSharp.Control
             }
             return false;
         }
-        #endregion
-    }
-    public enum State
-    {
-        HoverIn,
-        HoverOut,
-        Released,
-    }
+        protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
+        {
+            base.OnPaintSurface(e);
+            var countButton = Texts.Count;
+            if (countButton == 0)
+                return;
 
+            //get info skcanvas
+            var info = _info = e.Info;
+            var surface = e.Surface;
+            var canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            SaveCoordinateButtons(info); //Update CoordinateTabs
+
+            var borderWidth = _dimension.ConvertDpToPx(BorderWidth);
+            var cornerRadius = _dimension.ConvertDpToPx(CornerRadius);
+            var fontSize = _dimension.ConvertDpToPx(FontSize);
+
+            if (paint == null)
+                paint = new SKPaint();
+
+            paint.Reset();
+            paint.IsAntialias = true;
+
+            //create SKRect full size of canvasview 
+            DrawRectBorder(info, canvas, paint, cornerRadius, borderWidth);
+            //draw rect content
+            DrawRectContent(info, canvas, paint, cornerRadius, borderWidth,_state);
+            //draw edges
+            DrawEdges(info, canvas, paint, countButton, borderWidth);
+            //draw text
+            DrawTexts(info, canvas, paint, countButton, fontSize, _state);
+            //draw rect when button hover in hightlight 
+            DrawRectHightlight(canvas, paint, cornerRadius,_state);
+            //draw text when button hover in hightlight 
+            DrawTextHightLight(info, canvas, paint,fontSize,_state);
+        }
+    }
 }

@@ -14,18 +14,21 @@ namespace XAR_SegmentButtonWidthSkiaSharp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+       
         public MainPage()
         {
             InitializeComponent();
-            btn.Texts = new List<string>() { "Tp.HCM", "Ha Noi", "Da Nang"};
-            OnTapCommand = new Command<int>((tabCurrent) =>
+
+            btn.Texts = new List<string>() { "Tp.HCM", "Ha Noi", "Da Nang" };
+
+           
+            OnTapCommand = new Command<int>((positionCurrent) =>
             {
-                lblText.Text = btn.Texts[tabCurrent];
+                lblText.Text = btn.Texts[positionCurrent];
             });
+
             BindingContext = this;
         }
-
         public ICommand OnTapCommand { get; set; }
-        
     }
 }

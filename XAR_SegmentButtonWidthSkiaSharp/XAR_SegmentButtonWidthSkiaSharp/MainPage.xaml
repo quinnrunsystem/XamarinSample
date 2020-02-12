@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:control="clr-namespace:XAR_SegmentButtonWidthSkiaSharp"
     xmlns:mycontrol="clr-namespace:XAR_SegmentButtonWidthSkiaSharp.Control"
     mc:Ignorable="d" x:Class="XAR_SegmentButtonWidthSkiaSharp.MainPage">
     <Grid
@@ -18,17 +17,10 @@
           <mycontrol:MySKCanvasView
             x:Name="btn"
             Grid.Row="1"
-            VerticalOptions="Center"
-            BorderWidth="3"
-            BorderColor="#444a52"
-            CornerRadius="25"
-            SelectedTextColor="#151618"
-            BackgroundContentColor="#151618"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
             HeightRequest="50"
-            WidthRequest="300"
-            FontSize="11"
-            HorizontalOptions="Center"
-            TapButtonCommand="{Binding OnTapCommand}"/>
+            WidthRequest="300"/>
             <Label
                 Grid.Row="1"
                 VerticalOptions="Start"
